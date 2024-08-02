@@ -1,0 +1,30 @@
+@mixin netbook {
+  @media all and (max-width: 1205px) {
+    @content;
+  }
+}
+
+@mixin tabletLarge {
+  @media all and (max-width: 1063px) {
+    @content;
+  }
+}
+
+@mixin mobileMedium {
+  @media all and (max-width: 600px) {
+    @content;
+  }
+}
+
+@mixin mobileSmall {
+  @media all and (max-width: 492px) {
+    @content;
+  }
+}
+
+@mixin containerSettings {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 93px;
+}

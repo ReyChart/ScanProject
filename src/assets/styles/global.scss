@@ -1,0 +1,29 @@
+@import './reset';
+@import './variables';
+
+*,
+*::before,
+*:after {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+body {
+  font: 400 normal 18px/22px $body-font;
+  background-color: $white;
+  color: $black;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: $heading-font;
+}
+
+.container {
+  max-width: 1320px;
+  margin: 0 auto;
+}
