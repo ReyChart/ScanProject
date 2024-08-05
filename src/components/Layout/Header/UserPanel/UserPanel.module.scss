@@ -1,0 +1,110 @@
+@import '@/assets/styles/variables';
+
+.userPanel {
+  > .infoWrapper {
+    width: 474px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    > .companyInfo {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 3px;
+      padding: 15px;
+      background-color: rgba(217, 217, 217, 0.3);
+      border-radius: 5px;
+      font-size: 10px;
+      line-height: 12px;
+
+      > .text {
+        color: rgba(0, 0, 0, 0.4);
+
+        > .numbers {
+          margin-left: 6px;
+          font-size: 14px;
+          line-height: 17px;
+          font-weight: 700;
+          color: $black;
+        }
+
+        > .greenNum {
+          color: $green;
+        }
+      }
+    }
+
+    > .userInfo {
+      display: flex;
+      align-items: center;
+      gap: 3px;
+
+      > .userInfoWrap {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 3px;
+
+        > .name {
+          font-size: 14px;
+          line-height: 17px;
+          white-space: nowrap;
+        }
+
+        > .logoutBtn {
+          font-size: 10px;
+          line-height: 12px;
+          background: transparent;
+          opacity: 40%;
+
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+      }
+
+      > .avatar {
+        width: 32px;
+        height: 32px;
+      }
+    }
+  }
+
+  > .loginAction {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    font-size: 14px;
+    line-height: 17px;
+
+    > .registerLink {
+      color: $black;
+      opacity: 40%;
+      pointer-events: none;
+      text-decoration: none;
+    }
+
+    > .devider {
+      height: 26px;
+      width: 2px;
+      background-color: $turquoise;
+      opacity: 0.6;
+    }
+
+    > .authLink {
+      padding: 5px 10px;
+      background-color: $accent-turquoise;
+      border-radius: 5px;
+      font-weight: 500;
+      color: $black;
+      text-decoration: none;
+      transition: all 0.4s ease-in-out;
+
+      &:hover {
+        background-color: $turquoise;
+        color: $white;
+      }
+    }
+  }
+}

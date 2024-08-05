@@ -1,0 +1,62 @@
+@import '@/assets/styles/variables';
+
+.burgerLogo {
+  position: absolute;
+  top: 0;
+  left: 15px;
+  width: 111px;
+  height: 111px;
+}
+
+.burgerList {
+  display: flex !important;
+  flex-direction: column;
+  align-items: center;
+  gap: 25px;
+  margin: 138px 0 75px;
+
+  > .burgerItem {
+    > .burgerLink {
+      font-size: 16px;
+      line-height: 19px;
+      color: $white;
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
+.burgerBtnWrapper {
+  display: flex !important;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+
+  > .burgerRegister {
+    font-size: 16px;
+    line-height: 19px;
+    color: $white;
+    opacity: 0.4;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  > .burgerLogin {
+    width: 295px;
+    padding: 15px 0;
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 24px;
+    color: $black;
+    text-decoration: none;
+    text-align: center;
+    background-color: $accent-turquoise;
+    border-radius: 5px;
+  }
+}
