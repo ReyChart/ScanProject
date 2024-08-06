@@ -4,6 +4,7 @@
   "author": "ReyChart",
   "private": false,
   "version": "1.0.0",
+  "license": "ISC",
   "type": "module",
   "scripts": {
     "dev": "vite",

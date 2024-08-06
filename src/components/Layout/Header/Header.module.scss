@@ -4,6 +4,7 @@
 .header {
   > div {
     @include containerSettings;
+    min-height: 93px;
 
     > .headerLogo {
       > img {
