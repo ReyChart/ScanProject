@@ -1,4 +1,4 @@
-import { FunctionComponent, useState } from 'react';
+import { FunctionComponent, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { userData } from '@/data/constants';
 import BurgerMenu from '@/components/UI/BurgerMenu/BurgerMenu';
@@ -7,7 +7,22 @@ import clsx from 'clsx';
 import styles from './UserPanel.module.scss';
 
 const UserPanel: FunctionComponent = () => {
-  const [isAuth, setIsAuth] = useState<boolean>(false);
+  const [isMobile, setIsMobile] = useState<boolean>(innerWidth <= 768);
+  const [isAuth, setIsAuth] = useState<boolean>(true);
+
+  const handleMobileSize = () => {
+    setIsMobile(innerWidth <= 768);
+  };
+
+  useEffect(() => {
+    handleMobileSize();
+
+    window.addEventListener('resize', handleMobileSize);
+
+    return () => {
+      window.removeEventListener('resize', handleMobileSize);
+    };
+  }, []);
 
   return (
     <div className={styles.userPanel}>
@@ -28,19 +43,21 @@ const UserPanel: FunctionComponent = () => {
             </div>
             <img src={userData.img} alt="Avatar" className={styles.avatar} />
           </div>
-          <BurgerMenu />
+          {isMobile && <BurgerMenu />}
         </div>
       ) : (
-        <div className={styles.loginAction}>
-          <Link className={styles.registerLink} to="/register">
-            Зарегистрироваться
-          </Link>
-          <div className={styles.devider}></div>
-          <Link className={styles.authLink} to="/login">
-            Войти
-          </Link>
-          <BurgerMenu />
-        </div>
+        <>
+          <div className={styles.loginAction}>
+            <Link className={styles.registerLink} to="/register">
+              Зарегистрироваться
+            </Link>
+            <div className={styles.devider}></div>
+            <Link className={styles.authLink} to="/login">
+              Войти
+            </Link>
+          </div>
+          {isMobile && <BurgerMenu />}
+        </>
       )}
     </div>
   );

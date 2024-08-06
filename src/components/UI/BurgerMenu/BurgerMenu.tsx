@@ -1,16 +1,13 @@
 import { FunctionComponent, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { slide as Menu } from 'react-burger-menu';
+import { BurgerInterface } from '@/interfaces/general.inerfaces';
 
 import styles from './BurgerMenu.module.scss';
 
-interface BurgerInterface {
-  isOpen: boolean;
-}
-
 const BurgerMenu: FunctionComponent = () => {
   const [isBurgerOpen, setIsBurgerOpen] = useState<boolean>(false);
-  const [isAuth, setIsAuth] = useState<boolean>(false);
+  const [isAuth, setIsAuth] = useState<boolean>(true);
 
   const handleBurger = (state: BurgerInterface) => {
     setIsBurgerOpen(state.isOpen);

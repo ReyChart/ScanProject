@@ -5,7 +5,21 @@
   > div {
     @include containerSettings;
 
+    > .headerLogo {
+      > img {
+        width: 141px;
+
+        @include mobile {
+          width: 111px;
+        }
+      }
+    }
+
     > .nav {
+      @include mobile {
+        display: none;
+      }
+
       > .navList {
         display: flex;
         gap: 49px;

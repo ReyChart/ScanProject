@@ -1,23 +1,35 @@
-@mixin netbook {
-  @media all and (max-width: 1205px) {
+@mixin notebook {
+  @media all and (max-width: 1340px) {
     @content;
   }
 }
 
-@mixin tabletLarge {
+@mixin netbook {
+  @media all and (max-width: 1270px) {
+    @content;
+  }
+}
+
+@mixin tablet {
   @media all and (max-width: 1063px) {
     @content;
   }
 }
 
+@mixin mobile {
+  @media all and (max-width: 768px) {
+    @content;
+  }
+}
+
 @mixin mobileMedium {
-  @media all and (max-width: 600px) {
+  @media all and (max-width: 525px) {
     @content;
   }
 }
 
 @mixin mobileSmall {
-  @media all and (max-width: 492px) {
+  @media all and (max-width: 420px) {
     @content;
   }
 }
@@ -27,4 +39,22 @@
   justify-content: space-between;
   align-items: center;
   min-height: 93px;
+}
+
+@mixin authBtn {
+  width: 295px;
+  padding: 15px 0;
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 24px;
+  color: $black;
+  text-decoration: none;
+  text-align: center;
+  background-color: $accent-turquoise;
+  border-radius: 5px;
+  transition: all 0.4s ease-in-out;
+
+  &:hover {
+    background-color: $accent-turquoise-hover;
+  }
 }

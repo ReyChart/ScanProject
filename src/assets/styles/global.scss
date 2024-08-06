@@ -1,5 +1,6 @@
 @import './reset';
 @import './variables';
+@import './mixins';
 
 *,
 *::before,
@@ -26,6 +27,10 @@ h6 {
 .container {
   max-width: 1320px;
   margin: 0 auto;
+
+  @include notebook {
+    padding: 0 10px;
+  }
 }
 
 /* Position and sizing of burger button */
@@ -45,7 +50,8 @@ h6 {
 
 /* Color/shape of burger icon bars on hover */
 .bm-burger-bars-hover {
-  background: $accent-turquoise;
+  transition: all 0.4s ease-in-out;
+  background: $turquoise-hover;
   opacity: 1 !important;
 }
 
@@ -53,7 +59,7 @@ h6 {
 .bm-cross-button {
   background-image: url('/burgerClose.svg');
   right: 26px !important;
-  top: 34px !important;
+  top: 42px !important;
 }
 
 /* Color/shape of close button cross */

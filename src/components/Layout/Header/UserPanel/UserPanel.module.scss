@@ -1,11 +1,25 @@
 @import '@/assets/styles/variables';
+@import '@/assets/styles/mixins';
 
 .userPanel {
   > .infoWrapper {
-    width: 474px;
+    min-width: 474px;
+    width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
+
+    @include tablet {
+      min-width: 330px;
+    }
+
+    @include mobileMedium {
+      min-width: 250px;
+    }
+
+    @include mobileSmall {
+      min-width: 215px;
+    }
 
     > .companyInfo {
       display: flex;
@@ -18,8 +32,18 @@
       font-size: 10px;
       line-height: 12px;
 
+      @include mobileMedium {
+        width: 132px;
+        align-items: flex-start;
+        padding: 5px;
+      }
+
       > .text {
         color: rgba(0, 0, 0, 0.4);
+
+        @include mobileMedium {
+          white-space: nowrap;
+        }
 
         > .numbers {
           margin-left: 6px;
@@ -27,6 +51,11 @@
           line-height: 17px;
           font-weight: 700;
           color: $black;
+
+          @include mobileMedium {
+            display: block;
+            margin-left: 0;
+          }
         }
 
         > .greenNum {
@@ -39,6 +68,10 @@
       display: flex;
       align-items: center;
       gap: 3px;
+
+      @include mobile {
+        display: none;
+      }
 
       > .userInfoWrap {
         display: flex;
@@ -78,6 +111,10 @@
     font-size: 14px;
     line-height: 17px;
 
+    @include mobile {
+      display: none;
+    }
+
     > .registerLink {
       color: $black;
       opacity: 40%;
@@ -102,8 +139,7 @@
       transition: all 0.4s ease-in-out;
 
       &:hover {
-        background-color: $turquoise;
-        color: $white;
+        background-color: $accent-turquoise-hover;
       }
     }
   }
