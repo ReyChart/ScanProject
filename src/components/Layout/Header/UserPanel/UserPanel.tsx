@@ -8,7 +8,7 @@ import styles from './UserPanel.module.scss';
 
 const UserPanel: FunctionComponent = () => {
   const [isMobile, setIsMobile] = useState<boolean>(innerWidth <= 768);
-  const [isAuth, setIsAuth] = useState<boolean>(true);
+  const [isAuth, setIsAuth] = useState<boolean>(false);
 
   const handleMobileSize = () => {
     setIsMobile(innerWidth <= 768);
@@ -48,11 +48,11 @@ const UserPanel: FunctionComponent = () => {
       ) : (
         <>
           <div className={styles.loginAction}>
-            <Link className={styles.registerLink} to="/register">
+            <Link to={'/register'} className={styles.registerLink}>
               Зарегистрироваться
             </Link>
             <div className={styles.devider}></div>
-            <Link className={styles.authLink} to="/login">
+            <Link to={'/login'} className={styles.loginLink}>
               Войти
             </Link>
           </div>

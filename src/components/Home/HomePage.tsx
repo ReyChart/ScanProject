@@ -1,11 +1,16 @@
 import { FunctionComponent, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Layout from '../Layout/Layout';
 
 import styles from './HomePage.module.scss';
 
 const HomePage: FunctionComponent = () => {
   const [isAuth, setIsAuth] = useState<boolean>(true);
+  const navigate = useNavigate();
+
+  const handleNavigation = (path: string) => {
+    navigate(path);
+  };
 
   return (
     <Layout>
@@ -16,13 +21,12 @@ const HomePage: FunctionComponent = () => {
               Cервис по поиску <br /> публикаций <br /> о компании <br /> по его ИНН
             </h1>
             <p className={styles.text}>
-              Комплексный анализ публикаций, получение данных <br /> в формате PDF на электронную
-              почту.
+              Комплексный анализ публикаций, получение данных в формате PDF на электронную почту.
             </p>
             {isAuth && (
-              <Link className={styles.link} to={'/search'}>
+              <button className={styles.searchBtn} onClick={() => handleNavigation('/search')}>
                 Запросить данные
-              </Link>
+              </button>
             )}
           </div>
           <div className={styles.rightBlock}>

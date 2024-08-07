@@ -40,14 +40,19 @@
   align-items: center;
 }
 
-@mixin authBtn {
+@mixin link {
+  text-decoration: none;
+  cursor: pointer;
+}
+
+@mixin authLink {
+  @include link;
   width: 295px;
   padding: 15px 0;
   font-size: 20px;
   font-weight: 500;
   line-height: 24px;
   color: $black;
-  text-decoration: none;
   text-align: center;
   background-color: $accent-turquoise;
   border-radius: 5px;
@@ -55,5 +60,26 @@
 
   &:hover {
     background-color: $accent-turquoise-hover;
+  }
+}
+
+@mixin button {
+  background: transparent;
+  cursor: pointer;
+}
+
+@mixin actionBtn {
+  @include button;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  padding: 15px 0;
+  color: $white;
+  background-color: $accent-blue;
+  border-radius: 5px;
+  transition: all 0.4s ease-in-out;
+
+  &:hover {
+    background-color: $accent-blue-hover;
   }
 }

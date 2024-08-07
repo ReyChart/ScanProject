@@ -37,7 +37,7 @@
   gap: 20px;
 
   > .burgerLogout {
-    @include authBtn;
+    @include authLink;
   }
 
   > .burgerRegister {
@@ -53,6 +53,6 @@
   }
 
   > .burgerLogin {
-    @include authBtn;
+    @include authLink;
   }
 }

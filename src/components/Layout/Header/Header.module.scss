@@ -27,12 +27,12 @@
 
         > li {
           > .navLink {
+            @include link;
             position: relative;
             padding-bottom: 3px;
             font-size: 14px;
             line-height: 17px;
             color: $black;
-            text-decoration: none;
 
             &::after {
               content: '';
