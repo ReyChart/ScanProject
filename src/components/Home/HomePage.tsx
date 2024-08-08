@@ -1,6 +1,7 @@
 import { FunctionComponent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../Layout/Layout';
+import Slider from '../Slider/Slider';
 
 import styles from './HomePage.module.scss';
 
@@ -33,6 +34,7 @@ const HomePage: FunctionComponent = () => {
             <img src="./welcomeImg.svg" alt="The human with the coffee runs the programs" />
           </div>
         </section>
+        <Slider />
       </div>
     </Layout>
   );

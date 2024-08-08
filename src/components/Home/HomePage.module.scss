@@ -3,6 +3,7 @@
 
 .welcomeBlock {
   display: flex;
+  margin-bottom: 109px;
 
   @include netbook {
     flex-direction: column;
