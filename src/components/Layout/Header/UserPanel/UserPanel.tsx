@@ -51,7 +51,7 @@ const UserPanel: FunctionComponent = () => {
             <Link to={'/register'} className={styles.registerLink}>
               Зарегистрироваться
             </Link>
-            <div className={styles.devider}></div>
+            <div className={styles.divider}></div>
             <Link to={'/login'} className={styles.loginLink}>
               Войти
             </Link>

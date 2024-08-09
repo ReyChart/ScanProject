@@ -1,11 +1,20 @@
 @import '@/assets/styles/variables';
+@import '@/assets/styles/mixins';
 
 .slider {
+  margin-bottom: 50px;
+
+  @include mobile {
+    margin-bottom: 60px;
+  }
+
   > .heading {
     margin-bottom: 50px;
-    font-size: 45px;
-    font-weight: 900;
-    line-height: 54px;
+    @include mainHeading;
+
+    @include mobile {
+      margin-bottom: 12px;
+    }
   }
 
   > .swiperWrapper {
@@ -15,6 +24,10 @@
       max-width: 1300px;
       padding: 20px;
 
+      @include notebook {
+        max-width: calc(1280px + (100vw - 1360px));
+      }
+
       .benefitCard {
         display: flex;
         flex-direction: column;
@@ -22,7 +35,16 @@
         height: 225px;
         padding: 30px 20px;
         border-radius: 10px;
-        box-shadow: 0px 0px 15px 0px #00000033;
+        box-shadow: $box-shadow;
+
+        @include notebook {
+          max-width: 100%;
+        }
+
+        @include mobileMedium {
+          height: auto;
+          padding: 20px 5px 20px 15px;
+        }
 
         > .benefitImg {
           width: 64px;

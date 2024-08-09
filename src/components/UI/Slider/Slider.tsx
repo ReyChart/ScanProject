@@ -30,6 +30,20 @@ const Slider: FunctionComponent = () => {
             enabled: true,
             hideOnClick: false,
           }}
+          breakpoints={{
+            0: {
+              slidesPerView: 1,
+              spaceBetween: 30,
+            },
+            807: {
+              slidesPerView: 2,
+              spaceBetween: 30,
+            },
+            1135: {
+              slidesPerView: 3,
+              spaceBetween: 30,
+            },
+          }}
           className={styles.swiper}
         >
           {sliderItems.map((benefit, index) => (
