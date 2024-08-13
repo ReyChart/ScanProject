@@ -35,3 +35,43 @@ export const sliderItems = [
     text: 'Защита конфеденциальных сведений, не подлежащих разглашению по федеральному законодательству',
   },
 ];
+
+export const tariffs = [
+  {
+    name: 'Beginner',
+    icon: './beginnerIcon.svg',
+    alt: 'Lightbulb',
+    description: 'Для небольшого исследования',
+    color: 'orange',
+    currentPrice: 799,
+    oldPrice: 1200,
+    discountDescription: 'или 150 Р/мес. при рассрочке на 24 мес.',
+    included: ['Безлимитная история запросов', 'Безопасная сделка', 'Поддержка 24/7'],
+  },
+  {
+    name: 'Pro',
+    icon: './proIcon.svg',
+    alt: 'Target',
+    description: 'Для HR и фрилансеров',
+    color: 'blue',
+    currentPrice: 1299,
+    oldPrice: 2600,
+    discountDescription: 'или 279 ₽/мес. при рассрочке на 24 мес.',
+    included: ['Все пункты тарифа Beginner', 'Экспорт истории', 'Рекомендации по приоритетам'],
+  },
+  {
+    name: 'Business',
+    icon: './businessIcon.svg',
+    alt: 'Laptop',
+    description: 'Для корпоративных клиентов',
+    color: 'black',
+    currentPrice: 2379,
+    oldPrice: 3700,
+    discountDescription: null,
+    included: [
+      'Все пункты тарифа Pro',
+      'Безлимитное количество запросов',
+      'Приоритетная поддержка',
+    ],
+  },
+];

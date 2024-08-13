@@ -119,6 +119,10 @@
       @include link;
       color: $black;
       opacity: 40%;
+
+      &:hover {
+        text-decoration: underline;
+      }
     }
 
     > .divider {
