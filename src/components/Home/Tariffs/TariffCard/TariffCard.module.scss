@@ -11,6 +11,10 @@
   box-shadow: $box-shadow;
   overflow: hidden;
 
+  @include mobileMedium {
+    padding-bottom: 31px;
+  }
+
   &.orangeBorder {
     border: 2px solid $accent-yellow;
     border-top: none;
@@ -73,6 +77,10 @@
     position: relative;
     padding: 33px 15px 55px 30px;
 
+    @include mobileMedium {
+      padding: 20px 0 37px 24px;
+    }
+
     > .currentTariff {
       position: absolute;
       top: 12px;
@@ -83,6 +91,11 @@
       font-size: 14px;
       line-height: 17px;
       color: $white;
+
+      @include mobileMedium {
+        top: -13px;
+        right: 5px;
+      }
     }
 
     > .priceWrapper {
@@ -91,6 +104,10 @@
       gap: 10px;
       min-height: 68px;
       margin-bottom: 59px;
+
+      @include mobileMedium {
+        margin-bottom: 36px;
+      }
 
       > .currentPrice {
         display: flex;
@@ -119,6 +136,11 @@
         font-size: 20px;
         font-weight: 500;
         line-height: 24px;
+
+        @include mobileMedium {
+          font-size: 18px;
+          line-height: 22px;
+        }
       }
 
       > .descriptionList {
@@ -136,6 +158,11 @@
             left: 0;
             content: url('/markerIcon.svg');
           }
+
+          @include mobileMedium {
+            font-size: 16px;
+            line-height: 19px;
+          }
         }
       }
     }
@@ -152,6 +179,12 @@
       pointer-events: none;
       background-color: $btn-gray;
       color: $black;
+    }
+
+    @include mobileMedium {
+      max-width: 287px;
+      font-size: 18px;
+      line-height: 22px;
     }
   }
 }

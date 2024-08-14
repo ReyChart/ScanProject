@@ -20,5 +20,11 @@
   .tariffsWrapper {
     display: flex;
     justify-content: space-between;
+
+    @include notebook {
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 43px;
+    }
   }
 }
