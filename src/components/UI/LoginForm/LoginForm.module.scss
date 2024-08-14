@@ -1,0 +1,96 @@
+@import '@/assets/styles/variables';
+@import '@/assets/styles/mixins';
+
+.formWrapper {
+  position: relative;
+  min-width: 429px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 25px 25px 39px;
+  border-radius: 10px;
+  box-shadow: $box-shadow;
+
+  > .formIcon {
+    position: absolute;
+    top: -55px;
+    left: -51px;
+    width: 75px;
+    height: 92px;
+  }
+
+  > .btnWrapper {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+
+    > .authBtn {
+      min-width: 151px;
+      font-size: 16px;
+      line-height: 19px;
+      color: $turquoise;
+      padding-bottom: 8px;
+      border-bottom: 2px solid $turquoise;
+      background: transparent;
+      cursor: pointer;
+
+      &:last-of-type {
+        min-width: 213px;
+      }
+
+      &.btnInactive {
+        color: $accent-gray;
+        border-color: $accent-gray;
+      }
+    }
+  }
+
+  > .loginForm {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding-top: 40px;
+
+    > .label {
+      margin-bottom: 15px;
+      font-size: 14px;
+      line-height: 17px;
+      color: #949494;
+    }
+
+    > .input {
+      padding: 12px 19px;
+      margin-bottom: 20px;
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 19px;
+      border: 1px solid $accent-gray;
+      border-radius: 5px;
+      box-shadow: $input-box-shadow;
+
+      &:last-of-type {
+        margin-bottom: 30px;
+      }
+
+      &:focus {
+        border-color: $turquoise;
+      }
+    }
+
+    > .submitBtn {
+      margin-bottom: 15px;
+      font-size: 22px;
+      font-weight: 500;
+      line-height: 27px;
+      @include actionBtn;
+    }
+  }
+
+  > .recoveryLink {
+    margin-bottom: 30px;
+    font-size: 14px;
+    line-height: 17px;
+    color: $accent-blue;
+    cursor: pointer;
+  }
+}

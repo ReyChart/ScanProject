@@ -1,0 +1,26 @@
+@import '@/assets/styles/variables';
+@import '@/assets/styles/mixins';
+
+.login {
+  display: flex;
+  padding: 69px 0 80px;
+
+  @include mobile {
+    padding-top: 31px;
+  }
+
+  > .headingWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+
+    > .heading {
+      @include pageHeading;
+    }
+
+    > .img {
+      max-width: 335px;
+      margin-left: 112px;
+    }
+  }
+}
