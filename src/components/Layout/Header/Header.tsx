@@ -1,10 +1,12 @@
 import { FunctionComponent } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import UserPanel from './UserPanel/UserPanel';
 
 import styles from './Header.module.scss';
 
 const Header: FunctionComponent = () => {
+  const { pathname } = useLocation();
+
   return (
     <header className={styles.header}>
       <div className="container">
@@ -14,17 +16,26 @@ const Header: FunctionComponent = () => {
         <nav className={styles.nav}>
           <ul className={styles.navList}>
             <li>
-              <Link className={styles.navLink} to={'/'}>
+              <Link
+                className={`${styles.navLink} ${pathname === '/' ? styles.active : ''}`}
+                to={'/'}
+              >
                 Главная
               </Link>
             </li>
             <li>
-              <Link className={styles.navLink} to={'/tariffs'}>
+              <Link
+                className={`${styles.navLink} ${pathname === '/tariffs' ? styles.active : ''}`}
+                to={'/tariffs'}
+              >
                 Тарифы
               </Link>
             </li>
             <li>
-              <Link className={styles.navLink} to={'/faq'}>
+              <Link
+                className={`${styles.navLink} ${pathname === '/faq' ? styles.active : ''}`}
+                to={'/faq'}
+              >
                 FAQ
               </Link>
             </li>

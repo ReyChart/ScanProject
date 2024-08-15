@@ -34,6 +34,10 @@
             line-height: 17px;
             color: $black;
 
+            &.active {
+              pointer-events: none;
+            }
+
             &::after {
               content: '';
               position: absolute;
@@ -46,7 +50,8 @@
               transition: transform 0.4s cubic-bezier(0.58, 0.3, 0.005, 1);
             }
 
-            &:hover::after {
+            &:hover::after,
+            &.active::after {
               transform: scale(1);
             }
           }
