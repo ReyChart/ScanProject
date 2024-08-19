@@ -117,3 +117,26 @@
     background-color: $accent-blue-hover;
   }
 }
+
+@mixin searchInput {
+  padding: 13px 22px;
+  font-size: 14px;
+  line-height: 17px;
+  border: 1px solid $accent-gray;
+  border-radius: 5px;
+  box-shadow: $input-box-shadow;
+
+  &::placeholder {
+    text-align: center;
+    color: #949494;
+    opacity: 0.4;
+  }
+}
+
+@mixin searchSelect {
+  appearance: none;
+  background-image: url('/selectArrowIcon.svg');
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+  cursor: pointer;
+}

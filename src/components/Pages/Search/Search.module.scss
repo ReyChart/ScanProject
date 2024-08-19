@@ -1,0 +1,62 @@
+@import '@/assets/styles/variables';
+@import '@/assets/styles/mixins';
+
+.searchForm {
+  padding: 69px 0 64px;
+
+  @include mobile {
+    padding: 20px 0 25px;
+  }
+
+  > .headingContainer {
+    display: flex;
+    margin-bottom: 47px;
+
+    @include mobile {
+      margin-bottom: 21px;
+    }
+
+    > .titleWrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 25px;
+      max-width: 817px;
+
+      > .title {
+        @include pageHeading;
+      }
+
+      > .text {
+        font-size: 20px;
+        line-height: 24px;
+      }
+    }
+
+    > .imgWrapper {
+      display: flex;
+      align-items: flex-end;
+      gap: 166px;
+
+      > .documentIcon {
+        width: 91px;
+        height: 111px;
+      }
+
+      > .foldersIcon {
+        width: 141px;
+        height: 68px;
+        margin-bottom: 25px;
+      }
+    }
+  }
+
+  > .formContainer {
+    display: flex;
+    justify-content: space-between;
+
+    > .searchImg {
+      width: 443px;
+      height: 470px;
+    }
+  }
+}

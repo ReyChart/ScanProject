@@ -1,0 +1,51 @@
+@import '@/assets/styles/variables';
+@import '@/assets/styles/mixins';
+
+.form {
+  display: flex;
+  justify-content: space-between;
+  width: 872px;
+  min-height: 543px;
+  padding: 21px 39px 32px 44px;
+  border-radius: 10px;
+  box-shadow: $box-shadow;
+
+  > .inputContainer {
+    display: flex;
+    flex-direction: column;
+
+    > .inputWrapper {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 30px;
+
+      &.inputWrapper:nth-child(2) {
+        margin-bottom: 21px;
+      }
+
+      > .label {
+        padding-bottom: 20px;
+      }
+
+      > .input {
+        max-width: 242px;
+        @include searchInput;
+
+        &.select {
+          @include searchSelect;
+        }
+      }
+
+      > .datePickerWrapper {
+        display: flex;
+        gap: 20px;
+
+        .datePicker {
+          max-width: 176px;
+          @include searchSelect;
+          @include searchInput;
+        }
+      }
+    }
+  }
+}

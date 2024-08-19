@@ -35,12 +35,12 @@ const LoginForm: FunctionComponent = () => {
               Логин или номер телефона:
             </label>
             <input type="text" className={styles.input} />
-            <span className={styles.error}></span>
+            <span className={styles.errorMsg}></span>
             <label htmlFor="" className={styles.label}>
               Пароль:
             </label>
             <input type="text" className={styles.input} />
-            <span className={styles.error}></span>
+            <span className={styles.errorMsg}></span>
             <button className={styles.submitBtn}>Войти</button>
           </form>
           <Link className={styles.recoveryLink} to={'/password-recovery'}>
