@@ -53,10 +53,10 @@
   > .formContainer {
     display: flex;
     justify-content: space-between;
+    align-items: flex-end;
 
     > .searchImg {
-      width: 443px;
-      height: 470px;
+      width: 380px;
     }
   }
 }

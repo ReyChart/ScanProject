@@ -1,4 +1,4 @@
-export const validateInn = (inn: string | number): boolean => {
+export const validateInnNumber = (inn: string | number): boolean => {
   let result = false;
   if (typeof inn === 'number') {
     inn = inn.toString();

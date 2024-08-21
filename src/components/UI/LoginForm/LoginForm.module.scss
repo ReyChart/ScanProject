@@ -95,7 +95,7 @@
       }
 
       &:focus {
-        border-color: $turquoise;
+        @include focusInput;
       }
     }
 

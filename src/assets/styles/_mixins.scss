@@ -118,6 +118,11 @@
   }
 }
 
+@mixin focusInput {
+  border-color: $turquoise;
+  box-shadow: $focus-box-shadow;
+}
+
 @mixin searchInput {
   padding: 13px 22px;
   font-size: 14px;
@@ -131,6 +136,10 @@
     color: #949494;
     opacity: 0.4;
   }
+
+  &:focus {
+    @include focusInput;
+  }
 }
 
 @mixin searchSelect {
@@ -139,4 +148,17 @@
   background-repeat: no-repeat;
   background-position: right 16px center;
   cursor: pointer;
+}
+
+@mixin errorMsg {
+  height: 17px;
+  font-size: 14px;
+  line-height: 17px;
+  color: $red;
+}
+
+@mixin errorFields {
+  color: $red;
+  border-color: $red;
+  box-shadow: $error-box-shadow;
 }

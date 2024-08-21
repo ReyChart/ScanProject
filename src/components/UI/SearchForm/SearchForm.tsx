@@ -1,28 +1,140 @@
-import { FunctionComponent } from 'react';
-import { PatternFormat } from 'react-number-format';
+import { FunctionComponent, useEffect, useState } from 'react';
+import { PatternFormat, NumberFormatValues } from 'react-number-format';
+import { ru } from 'date-fns/locale/ru';
 import DatePicker from 'react-datepicker';
-import { validateInn } from '@/utils/validateFunctions';
+import clsx from 'clsx';
 
+import { validateInnNumber } from '@/utils/validateFunctions';
+import { ErrorStates } from '@/interfaces/general.inerfaces';
+
+import 'react-datepicker/dist/react-datepicker.css';
 import styles from './SearchForm.module.scss';
 
 const SearchForm: FunctionComponent = () => {
+  const [inn, setInn] = useState<string>('');
+  const [innIsValid, setInnIsValid] = useState<boolean>(false);
+  const [documentsCountIsValid, setDocumentsCountIsValid] = useState<boolean>(false);
+  const [startDate, setStartDate] = useState<null | Date>(null);
+  const [endDate, setEndDate] = useState<null | Date>(null);
+  const [datesAreValid, setDatesAreValid] = useState<boolean>(false);
+  const [formIsValid, setFormIsValid] = useState<boolean>(false);
+  const [errorStates, setErrorStates] = useState<ErrorStates>({
+    inn: { error: false, message: '' },
+    documentsCount: { error: false, message: '' },
+    dates: { error: false, message: '' },
+  });
+
+  const validateInn = (value: string) => {
+    const isValid = validateInnNumber(value);
+    setInnIsValid(isValid);
+    if (!isValid) {
+      setErrorStates((prevState) => ({
+        ...prevState,
+        inn: {
+          error: true,
+          message: 'Введите корректные данные',
+        },
+      }));
+    } else {
+      setErrorStates((prevState) => ({
+        ...prevState,
+        inn: {
+          error: false,
+          message: '',
+        },
+      }));
+    }
+  };
+
+  const validateDocumentsCount = (value: string) => {
+    const isValid = parseInt(value) > 0 && parseInt(value) <= 1000;
+    setDocumentsCountIsValid(isValid);
+    if (!isValid) {
+      setErrorStates((prevState) => ({
+        ...prevState,
+        documentsCount: {
+          error: true,
+          message: 'Введите корректные данные',
+        },
+      }));
+    } else {
+      setErrorStates((prevState) => ({
+        ...prevState,
+        documentsCount: {
+          error: false,
+          message: '',
+        },
+      }));
+    }
+  };
+
+  const validateDates = (startDate: Date | null, endDate: Date | null) => {
+    const currentDate = new Date();
+    const isValid = startDate && endDate ? startDate <= endDate && endDate <= currentDate : false;
+    setDatesAreValid(isValid);
+    if (!isValid) {
+      setErrorStates((prevState) => ({
+        ...prevState,
+        dates: {
+          error: true,
+          message: 'Введите корректные данные',
+        },
+      }));
+    } else {
+      setErrorStates((prevState) => ({
+        ...prevState,
+        dates: {
+          error: false,
+          message: '',
+        },
+      }));
+    }
+  };
+
+  const handleInnChange = (values: NumberFormatValues) => {
+    const { value } = values;
+    setInn(value);
+    validateInn(value);
+  };
+
+  const handleDocumentsCountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target;
+    validateDocumentsCount(value);
+  };
+
+  const handleStartDateChange = (date: Date | null) => {
+    setStartDate(date);
+    if (endDate) validateDates(date, endDate);
+  };
+
+  const handleEndDateChange = (date: Date | null) => {
+    setEndDate(date);
+    if (startDate) validateDates(startDate, date);
+  };
+
+  useEffect(() => {
+    setFormIsValid(innIsValid && documentsCountIsValid && datesAreValid);
+  }, [innIsValid, documentsCountIsValid, datesAreValid]);
+
   return (
     <form className={styles.form}>
       <div className={styles.inputContainer}>
         <div className={styles.inputWrapper}>
           <label htmlFor="inn" className={styles.label}>
-            ИНН компании <span>*</span>
+            ИНН компании{' '}
+            <span className={clsx({ [styles.errorMarker]: errorStates.inn.error })}>*</span>
           </label>
           <PatternFormat
-            className={styles.input}
+            className={clsx(styles.input, { [styles.errorInput]: errorStates.inn.error })}
             format="## ### ### ##"
             type="text"
             name="inn"
             id="inn"
             placeholder="10 цифр"
+            onValueChange={(values) => handleInnChange(values)}
             required
           />
-          <span className={styles.errorMsg}></span>
+          <span className={styles.errorMsg}>{errorStates.inn.message}</span>
         </div>
         <div className={styles.inputWrapper}>
           <label htmlFor="tonality" className={styles.label}>
@@ -35,37 +147,61 @@ const SearchForm: FunctionComponent = () => {
           </select>
         </div>
         <div className={styles.inputWrapper}>
-          <label htmlFor="documents" className={styles.label}>
-            Количество документов в выдаче <span>*</span>
+          <label htmlFor="documentsCount" className={styles.label}>
+            Количество документов в выдаче{' '}
+            <span className={clsx({ [styles.errorMarker]: errorStates.documentsCount.error })}>
+              *
+            </span>
           </label>
           <input
-            className={styles.input}
+            className={clsx(styles.input, {
+              [styles.errorInput]: errorStates.documentsCount.error,
+            })}
             type="text"
-            name="documents"
-            id="documents"
-            placeholder="от 1 до 100"
+            name="documentsCount"
+            id="documentsCount"
+            placeholder="от 1 до 1000"
+            onChange={handleDocumentsCountChange}
           />
-          <span className={styles.errorMsg}></span>
+          <span className={styles.errorMsg}>{errorStates.documentsCount.message}</span>
         </div>
         <div className={styles.inputWrapper}>
           <label htmlFor="date" className={styles.label}>
-            Диапозон поиска <span>*</span>
+            Диапозон поиска{' '}
+            <span className={clsx({ [styles.errorMarker]: errorStates.dates.error })}>*</span>
           </label>
           <div className={styles.datePickerWrapper}>
             <DatePicker
-              className={styles.datePicker}
+              className={clsx(styles.datePicker, {
+                [styles.errorDatePicker]: errorStates.dates.error,
+              })}
               name="startDate"
               dateFormat="yyyy-MM-dd"
+              selected={startDate}
+              onChange={(date) => handleStartDateChange(date)}
+              selectsStart
+              startDate={startDate ?? undefined}
+              endDate={endDate ?? undefined}
               placeholderText="Дата начала"
+              locale={ru}
             />
             <DatePicker
-              className={styles.datePicker}
+              className={clsx(styles.datePicker, {
+                [styles.errorDatePicker]: errorStates.dates.error,
+              })}
               name="endDate"
               dateFormat="yyyy-MM-dd"
+              selected={endDate}
+              onChange={(date) => handleEndDateChange(date)}
+              selectsEnd
+              startDate={startDate ?? undefined}
+              endDate={endDate ?? undefined}
+              minDate={startDate ?? undefined}
               placeholderText="Дата конца"
+              locale={ru}
             />
           </div>
-          <span className={styles.errorMsg}></span>
+          <span className={styles.errorMsg}>{errorStates.dates.message}</span>
         </div>
       </div>
       <div className={styles.checkboxContainer}>
@@ -124,7 +260,7 @@ const SearchForm: FunctionComponent = () => {
           </li>
         </ul>
         <div className={styles.btnWrapper}>
-          <button className={styles.submitBtn} type="submit">
+          <button className={styles.submitBtn} type="submit" disabled={!formIsValid}>
             Поиск
           </button>
           <span className={styles.requiredFields}>* Обязательные к заполнению поля</span>
