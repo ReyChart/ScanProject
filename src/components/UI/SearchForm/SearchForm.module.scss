@@ -10,6 +10,20 @@
   border-radius: 10px;
   box-shadow: $box-shadow;
 
+  @include tablet {
+    width: 100%;
+    max-width: 872px;
+  }
+
+  @include tabletSmall {
+    flex-direction: column;
+    max-height: 688px;
+  }
+
+  @include mobile {
+    padding: 32px 26px 37px 14px;
+  }
+
   > .inputContainer {
     display: flex;
     flex-direction: column;
@@ -21,6 +35,12 @@
 
       &.inputWrapper:nth-child(2) {
         margin-bottom: 21px;
+      }
+
+      &.inputWrapper:nth-child(4) {
+        @include tabletSmall {
+          margin-bottom: 21px;
+        }
       }
 
       > .label {
@@ -35,6 +55,10 @@
         max-width: 242px;
         @include searchInput;
 
+        @include tabletSmall {
+          max-width: 100%;
+        }
+
         &.select {
           @include searchSelect;
         }
@@ -47,13 +71,18 @@
       > .datePickerWrapper {
         display: flex;
 
+        @include tabletSmall {
+          flex-direction: column;
+        }
+
         .datePicker {
           max-width: 176px;
           @include searchSelect;
           @include searchInput;
 
-          &:first-child {
-            margin-right: 20px;
+          @include tabletSmall {
+            width: 100%;
+            max-width: 100%;
           }
 
           &.errorDatePicker {
@@ -66,6 +95,11 @@
         margin-top: 2px;
         padding-left: 20px;
         @include errorMsg;
+
+        @include tabletSmall {
+          padding-left: 0;
+          text-align: center;
+        }
       }
 
       &:last-child {
@@ -87,6 +121,10 @@
       flex-direction: column;
       gap: 15px;
 
+      @include tabletSmall {
+        display: none;
+      }
+
       > .checkboxItem {
         display: flex;
         align-items: flex-start;
@@ -97,8 +135,8 @@
 
         > .checkbox {
           position: relative;
-          width: 20px;
-          height: 20px;
+          min-width: 20px;
+          min-height: 20px;
           margin-right: 17px;
           appearance: none;
           border: 1px solid $black;
@@ -135,6 +173,14 @@
       align-self: flex-end;
       gap: 10px;
       width: 305px;
+
+      @include tabletSmall {
+        align-self: center;
+      }
+
+      @include mobileSmall {
+        width: 100%;
+      }
 
       > .submitBtn {
         font-size: 22px;

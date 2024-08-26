@@ -106,6 +106,15 @@ Note: Beware of modifying this element as it can break the animations - you shou
 }
 
 /* DatePicker CSS settings */
+.react-datepicker-wrapper:first-child {
+  margin-right: 20px;
+
+  @include tabletSmall {
+    margin-right: 0;
+    margin-bottom: 20px;
+  }
+}
+
 .react-datepicker__current-month {
   font-family: $body-font;
   text-transform: capitalize;

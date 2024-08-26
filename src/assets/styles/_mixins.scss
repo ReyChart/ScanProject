@@ -16,6 +16,12 @@
   }
 }
 
+@mixin tabletSmall {
+  @media all and (max-width: 820px) {
+    @content;
+  }
+}
+
 @mixin mobile {
   @media all and (max-width: 768px) {
     @content;

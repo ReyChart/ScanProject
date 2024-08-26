@@ -166,7 +166,7 @@ const SearchForm: FunctionComponent = () => {
           <span className={styles.errorMsg}>{errorStates.documentsCount.message}</span>
         </div>
         <div className={styles.inputWrapper}>
-          <label htmlFor="date" className={styles.label}>
+          <label htmlFor="startDate" className={styles.label}>
             Диапозон поиска{' '}
             <span className={clsx({ [styles.errorMarker]: errorStates.dates.error })}>*</span>
           </label>
@@ -176,6 +176,7 @@ const SearchForm: FunctionComponent = () => {
                 [styles.errorDatePicker]: errorStates.dates.error,
               })}
               name="startDate"
+              id="startDate"
               dateFormat="yyyy-MM-dd"
               selected={startDate}
               onChange={(date) => handleStartDateChange(date)}
@@ -190,6 +191,7 @@ const SearchForm: FunctionComponent = () => {
                 [styles.errorDatePicker]: errorStates.dates.error,
               })}
               name="endDate"
+              id="endDate"
               dateFormat="yyyy-MM-dd"
               selected={endDate}
               onChange={(date) => handleEndDateChange(date)}
