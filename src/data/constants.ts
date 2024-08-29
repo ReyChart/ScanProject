@@ -3,7 +3,7 @@ export const userData = {
   img: './userAvatar.svg',
 };
 
-export const sliderItems = [
+export const benefitSliderItems = [
   {
     img: './watchImg.svg',
     alt: 'watch',
@@ -74,4 +74,9 @@ export const tariffs = [
       'Приоритетная поддержка',
     ],
   },
+];
+
+export const articlesImg = [
+  { src: './documentCardImg.svg', alt: 'Document cover' },
+  { src: './documentCardImg2.svg', alt: 'Document cover' },
 ];

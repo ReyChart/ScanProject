@@ -1,14 +1,16 @@
 import { FunctionComponent } from 'react';
-import { sliderItems } from '@/data/constants';
+import clsx from 'clsx';
+import { benefitSliderItems } from '@/data/constants';
+
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Autoplay, Keyboard } from 'swiper/modules';
 
 import 'swiper/scss';
-import styles from './Slider.module.scss';
+import styles from './BenefitSlider.module.scss';
 
-const Slider: FunctionComponent = () => {
+const BenefitSlider: FunctionComponent = () => {
   return (
-    <section className={styles.slider}>
+    <section className={styles.benefitSlider}>
       <h2 className={styles.heading}>Почему именно мы</h2>
       <div className={styles.swiperWrapper}>
         <Swiper
@@ -46,18 +48,21 @@ const Slider: FunctionComponent = () => {
           }}
           className={styles.swiper}
         >
-          {sliderItems.map((benefit, index) => (
+          {benefitSliderItems.map((benefit, index) => (
             <SwiperSlide key={index} className={styles.benefitCard}>
               <img src={benefit.img} alt={benefit.alt} className={styles.benefitImg} />
               <p className={styles.benefitText}>{benefit.text}</p>
             </SwiperSlide>
           ))}
         </Swiper>
-        <button className={styles.btnPrev} aria-label="Previous slide"></button>
-        <button className={styles.btnNext} aria-label="Next slide"></button>
+        <button
+          className={clsx(styles.navBtn, styles.btnPrev)}
+          aria-label="Previous slide"
+        ></button>
+        <button className={clsx(styles.navBtn, styles.btnNext)} aria-label="Next slide"></button>
       </div>
     </section>
   );
 };
 
-export default Slider;
+export default BenefitSlider;

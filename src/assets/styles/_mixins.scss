@@ -63,13 +63,23 @@
   line-height: 48px;
 
   @include mobile {
-    font-size: 22px;
-    line-height: 26px;
+    font-size: 28px;
+    line-height: 34px;
   }
 }
 
-@mixin inputLabel {
-  margin-bottom: 15px;
+@mixin resultPageHeading {
+  font-size: 30px;
+  font-weight: 900;
+  line-height: 36px;
+
+  @include mobile {
+    font-size: 28px;
+    line-height: 34px;
+  }
+}
+
+@mixin smallText {
   font-size: 16px;
   line-height: 19px;
   color: #949494;
@@ -85,13 +95,9 @@
   cursor: pointer;
 }
 
-@mixin authLink {
+%settingsLink {
   @include link;
-  width: 295px;
   padding: 15px 0;
-  font-size: 20px;
-  font-weight: 500;
-  line-height: 24px;
   color: $black;
   text-align: center;
   background-color: $accent-turquoise;
@@ -101,6 +107,21 @@
   &:hover {
     background-color: $accent-turquoise-hover;
   }
+}
+
+@mixin authLink {
+  width: 295px;
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 24px;
+  @extend %settingsLink;
+}
+
+@mixin sourceLink {
+  width: 223px;
+  font-size: 16px;
+  line-height: 19px;
+  @extend %settingsLink;
 }
 
 @mixin button {

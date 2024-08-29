@@ -33,6 +33,8 @@
 
     @include mobile {
       max-width: 429px;
+      font-size: 22px;
+      line-height: 26px;
     }
 
     @include mobileMedium {

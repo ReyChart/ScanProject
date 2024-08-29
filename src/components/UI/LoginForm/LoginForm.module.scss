@@ -77,7 +77,8 @@
     padding-top: 40px;
 
     > .label {
-      @include inputLabel;
+      margin-bottom: 15px;
+      @include smallText;
     }
 
     > .input {
@@ -125,7 +126,8 @@
     align-self: flex-start;
 
     > .socialText {
-      @include inputLabel;
+      margin-bottom: 15px;
+      @include smallText;
     }
 
     > .socialBtnWrapper {

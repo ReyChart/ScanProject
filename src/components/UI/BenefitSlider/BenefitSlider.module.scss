@@ -1,7 +1,7 @@
 @import '@/assets/styles/variables';
 @import '@/assets/styles/mixins';
 
-.slider {
+.benefitSlider {
   margin-bottom: 50px;
 
   @include mobile {
@@ -54,8 +54,7 @@
       }
     }
 
-    > .btnPrev,
-    .btnNext {
+    > .navBtn {
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
@@ -63,6 +62,7 @@
       height: 39px;
       background: none;
       border: none;
+      opacity: 0.2;
       cursor: pointer;
       z-index: 1;
       background-repeat: no-repeat;

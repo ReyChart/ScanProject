@@ -1,0 +1,42 @@
+@import '@/assets/styles/variables';
+@import '@/assets/styles/mixins';
+
+.resultWelcome {
+  padding-top: 25px;
+
+  @include mobile {
+    padding-top: 20px;
+  }
+
+  > .headingContainer {
+    display: flex;
+    gap: 215px;
+
+    > .titleWrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 36px;
+      max-width: 509px;
+      padding-top: 44px;
+
+      > .title {
+        @include pageHeading;
+      }
+
+      > .text {
+        font-size: 20px;
+        line-height: 24px;
+        max-width: 440px;
+
+        @include mobile {
+          font-size: 18px;
+          line-height: 22px;
+        }
+      }
+    }
+
+    > .img {
+      max-width: 552px;
+    }
+  }
+}
