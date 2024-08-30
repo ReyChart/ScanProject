@@ -77,6 +77,6 @@ export const tariffs = [
 ];
 
 export const articlesImg = [
-  { src: './documentCardImg.svg', alt: 'Document cover' },
-  { src: './documentCardImg2.svg', alt: 'Document cover' },
+  { src: './documentCardImg.png', alt: 'Document cover' },
+  { src: './documentCardImg2.png', alt: 'Document cover' },
 ];

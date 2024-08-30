@@ -3,10 +3,13 @@
 
 .documentCard {
   max-width: 641px;
-  min-height: 694px;
   padding: 19px 30px 35px;
   border-radius: 10px;
   box-shadow: $box-shadow;
+
+  @include mobileMedium {
+    padding: 19px 14px 18px 24px;
+  }
 
   > .infoContainer {
     display: flex;
@@ -25,20 +28,38 @@
     font-size: 26px;
     font-weight: 500;
     line-height: 31px;
+
+    @include mobile {
+      font-size: 19px;
+      line-height: 23px;
+    }
   }
 
   > .typesContainer {
     display: flex;
-    align-items: center;
+    align-items: flex-end;
     flex-wrap: wrap;
     gap: 15px;
 
     > .type {
-      margin-top: 14px;
       padding: 4px 14px;
       font-size: 12px;
       line-height: 15px;
       border-radius: 5px;
+
+      @include mobile {
+        padding: 4px 12px;
+        font-size: 10px;
+        line-height: 12px;
+      }
+
+      &:first-child {
+        margin-top: 14px;
+
+        @include mobile {
+          margin-top: 20px;
+        }
+      }
 
       &.turquoise {
         background-color: $accent-turquoise;
@@ -56,6 +77,9 @@
 
   > .img {
     margin: 14px 0 20px;
+    border-radius: 10px;
+    object-fit: cover;
+    height: 158px;
   }
 
   > .text {
@@ -76,8 +100,18 @@
     justify-content: space-between;
     margin-top: 32px;
 
+    @include mobile {
+      margin-top: 25px;
+    }
+
     > .sourceLink {
       @include sourceLink;
+
+      @include mobile {
+        width: 195px;
+        font-size: 14px;
+        line-height: 17px;
+      }
     }
 
     > .wordCount {

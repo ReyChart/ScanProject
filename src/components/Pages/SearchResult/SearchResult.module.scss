@@ -4,6 +4,10 @@
 .resultWelcome {
   padding-top: 25px;
 
+  @include tablet {
+    margin-bottom: 59px;
+  }
+
   @include mobile {
     padding-top: 20px;
   }
@@ -12,12 +16,31 @@
     display: flex;
     gap: 215px;
 
+    @include notebook {
+      justify-content: space-between;
+      gap: 0;
+    }
+
+    @include tablet {
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+    }
+
     > .titleWrapper {
       display: flex;
       flex-direction: column;
       gap: 36px;
       max-width: 509px;
       padding-top: 44px;
+
+      @include tablet {
+        padding-top: 0;
+      }
+
+      @include mobile {
+        gap: 21px;
+      }
 
       > .title {
         @include pageHeading;
@@ -35,8 +58,12 @@
       }
     }
 
-    > .img {
+    > .imgWrapper {
       max-width: 552px;
+
+      @include mobile {
+        max-width: 350px;
+      }
     }
   }
 }

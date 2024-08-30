@@ -17,11 +17,13 @@ const SearchResult: FunctionComponent = () => {
                 Поиск может занять некоторое время, просим сохранять терпение.
               </p>
             </div>
-            <img
-              src="./searchResultImg.svg"
-              alt="The girl with the magnifying glass and the target"
-              className={styles.img}
-            />
+            <div className={styles.imgWrapper}>
+              <img
+                src="./searchResultImg.svg"
+                alt="The girl with the magnifying glass and the target"
+                className={styles.img}
+              />
+            </div>
           </div>
         </section>
         <ResultSlider />

@@ -71,13 +71,31 @@ const ResultSlider: FunctionComponent = () => {
           }}
           onInit={handleSwiperInit}
           onSlideChange={handleSlideChange}
+          breakpoints={{
+            0: {
+              slidesPerView: 1,
+              spaceBetween: 42,
+            },
+            526: {
+              slidesPerView: 2,
+            },
+            768: {
+              slidesPerView: 4,
+            },
+            1063: {
+              slidesPerView: 6,
+            },
+            1370: {
+              slidesPerView: Math.min(mockResultData.length, 8),
+            },
+          }}
           className={styles.swiper}
         >
           {mockResultData.map((item, index) => (
             <SwiperSlide key={index} className={styles.resultCard}>
-              <p>{item.date}</p>
-              <p>{item.documentsCount}</p>
-              <p>{item.riskCount}</p>
+              <p className={styles.text}>{item.date}</p>
+              <p className={styles.text}>{item.documentsCount}</p>
+              <p className={styles.text}>{item.riskCount}</p>
             </SwiperSlide>
           ))}
         </Swiper>
