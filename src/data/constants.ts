@@ -80,3 +80,5 @@ export const articlesImg = [
   { src: './documentCardImg.png', alt: 'Document cover' },
   { src: './documentCardImg2.png', alt: 'Document cover' },
 ];
+
+export const baseURL = 'https://gateway.scan-interfax.ru';

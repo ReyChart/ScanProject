@@ -1,15 +1,103 @@
-import { FunctionComponent, useCallback, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { FunctionComponent, useCallback, useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import clsx from 'clsx';
+
+import { loginUser } from '@/redux/userSlice';
+import { useAppDispatch, useAppSelector } from '@/redux/hooks';
+import { isPhoneNumber, isValidPhoneNumber, formatPhoneNumber } from '@/utils/validateFunctions';
+import { LoginFormData, ErrorMessage } from '@/interfaces/general.inerfaces';
 
 import styles from './LoginForm.module.scss';
 
 const LoginForm: FunctionComponent = () => {
   const [activeBtn, setActiveBtn] = useState<string>('login');
+  const [isValid, setIsValid] = useState<boolean>(false);
+  const [loginData, setLoginData] = useState<LoginFormData>({
+    login: '',
+    password: '',
+  });
+  const [loginValue, setLoginValue] = useState<string>('');
+  const [loginError, setLoginError] = useState<ErrorMessage>({
+    error: false,
+    message: '',
+  });
+  const [passwordError, setPasswordError] = useState<ErrorMessage>({
+    error: false,
+    message: '',
+  });
+
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const { isAuthorized, loginServerError, isLoggingIn } = useAppSelector((state) => state.user);
 
   const handleAuthBtnChange = useCallback((buttonType: string) => {
     setActiveBtn(buttonType);
   }, []);
+
+  const validateLogin = (value: string) => {
+    if (isPhoneNumber(value)) {
+      if (value.length > 1 && !value.startsWith('+7')) {
+        value = `+7${value.replace(/^\+?7?/, '')}`;
+      }
+      if (value.replace(/\s/g, '').length > 12 || !isValidPhoneNumber(value)) {
+        setLoginError({ error: true, message: 'Введите корректные данные' });
+      } else {
+        setLoginError({ error: false, message: '' });
+      }
+      setLoginValue(formatPhoneNumber(value));
+    } else {
+      setLoginError({ error: false, message: '' });
+      setLoginValue(value);
+    }
+    return value.replace(/\s/g, '');
+  };
+
+  const validatePassword = (value: string): string => {
+    if (value.length < 1) {
+      setPasswordError({ error: true, message: 'Неправильный пароль' });
+    } else {
+      setPasswordError({ error: false, message: '' });
+    }
+    return value;
+  };
+
+  const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.currentTarget;
+
+    let updatedValue = value;
+    if (name === 'login') {
+      updatedValue = validateLogin(value);
+    } else if (name === 'password') {
+      updatedValue = validatePassword(value);
+    }
+
+    setLoginData({ ...loginData, [name]: updatedValue });
+  };
+
+  const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const data: { login: string; password: string } = {
+      login: formData.get('login') as string,
+      password: formData.get('password') as string,
+    };
+    dispatch(loginUser(data));
+  };
+
+  useEffect(() => {
+    setIsValid(
+      loginData.login.length > 0 &&
+        loginData.password.length > 0 &&
+        !loginError.error &&
+        !passwordError.error
+    );
+  }, [loginData, loginError, passwordError]);
+
+  useEffect(() => {
+    if (isAuthorized) {
+      navigate('/');
+    }
+  }, [isAuthorized, navigate]);
 
   return (
     <div className={styles.formWrapper}>
@@ -30,18 +118,36 @@ const LoginForm: FunctionComponent = () => {
       </div>
       {activeBtn === 'login' ? (
         <>
-          <form className={styles.loginForm}>
-            <label htmlFor="" className={styles.label}>
+          <form onSubmit={handleFormSubmit} className={styles.loginForm}>
+            <label htmlFor="login" className={styles.label}>
               Логин или номер телефона:
             </label>
-            <input type="text" className={styles.input} />
-            <span className={styles.errorMsg}></span>
-            <label htmlFor="" className={styles.label}>
+            <input
+              type="text"
+              id="login"
+              name="login"
+              value={loginValue}
+              onChange={handleOnChange}
+              className={clsx(styles.input, { [styles.errorInput]: loginError.error === true })}
+              required
+            />
+            <span className={styles.errorMsg}>{loginError.message}</span>
+            <label htmlFor="password" className={styles.label}>
               Пароль:
             </label>
-            <input type="text" className={styles.input} />
-            <span className={styles.errorMsg}></span>
-            <button className={styles.submitBtn}>Войти</button>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              onChange={handleOnChange}
+              className={clsx(styles.input, { [styles.errorInput]: passwordError.error === true })}
+              required
+            />
+            <span className={styles.errorMsg}>{passwordError.message}</span>
+            <button type="submit" disabled={!isValid || isLoggingIn} className={styles.submitBtn}>
+              {isLoggingIn ? 'Загрузка...' : 'Войти'}
+            </button>
+            <span className={styles.errorMsg}>{loginServerError}</span>
           </form>
           <Link className={styles.recoveryLink} to={'/password-recovery'}>
             Восстановить пароль

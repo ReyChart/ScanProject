@@ -4,7 +4,7 @@
 .formWrapper {
   grid-area: form;
   position: relative;
-  min-width: 429px;
+  width: 429px;
   height: 523px;
   display: flex;
   flex-direction: column;
@@ -18,7 +18,7 @@
   }
 
   @include mobileMedium {
-    min-width: 335px;
+    width: 335px;
   }
 
   > .formIcon {
@@ -83,7 +83,6 @@
 
     > .input {
       padding: 12px 19px;
-      margin-bottom: 20px;
       font-size: 16px;
       font-weight: 400;
       line-height: 19px;
@@ -91,21 +90,32 @@
       border-radius: 5px;
       box-shadow: $input-box-shadow;
 
-      &:last-of-type {
-        margin-bottom: 30px;
-      }
-
       &:focus {
         @include focusInput;
       }
+
+      &.errorInput {
+        @include errorFields;
+      }
+    }
+
+    > .errorMsg {
+      margin-top: 3px;
+      text-align: center;
+      @include errorMsg;
     }
 
     > .submitBtn {
-      margin-bottom: 15px;
+      margin-top: 10px;
       font-size: 22px;
       font-weight: 500;
       line-height: 27px;
       @include actionBtn;
+
+      &:disabled {
+        opacity: 0.5;
+        pointer-events: none;
+      }
 
       @include mobile {
         font-size: 20px;
@@ -115,7 +125,7 @@
   }
 
   > .recoveryLink {
-    margin-bottom: 30px;
+    margin: 5px 0 30px;
     font-size: 14px;
     line-height: 17px;
     color: $accent-blue;

@@ -8,6 +8,7 @@ import SearchResult from '@/components/Pages/SearchResult/SearchResult';
 interface IRoutes {
   path: string;
   component: FunctionComponent;
+  protected?: boolean;
 }
 
 export const routes: IRoutes[] = [
@@ -22,10 +23,12 @@ export const routes: IRoutes[] = [
   {
     path: '/search',
     component: Search,
+    protected: true,
   },
   {
     path: '/result',
     component: SearchResult,
+    protected: true,
   },
   {
     path: '*',

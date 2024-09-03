@@ -1,13 +1,24 @@
 import { FunctionComponent, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { slide as Menu } from 'react-burger-menu';
+
+import { logout } from '@/redux/userSlice';
+import { useAppSelector, useAppDispatch } from '@/redux/hooks';
 import { BurgerInterface } from '@/interfaces/general.inerfaces';
 
 import styles from './BurgerMenu.module.scss';
 
 const BurgerMenu: FunctionComponent = () => {
   const [isBurgerOpen, setIsBurgerOpen] = useState<boolean>(false);
-  const [isAuth, setIsAuth] = useState<boolean>(true);
+
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const isAuthorized = useAppSelector((state) => state.user.isAuthorized);
+
+  const handleLogout = () => {
+    dispatch(logout());
+    navigate('');
+  };
 
   const handleBurger = (state: BurgerInterface) => {
     setIsBurgerOpen(state.isOpen);
@@ -38,8 +49,10 @@ const BurgerMenu: FunctionComponent = () => {
         </li>
       </ul>
       <div className={styles.burgerBtnWrapper}>
-        {isAuth ? (
-          <button className={styles.burgerLogout}>Выйти</button>
+        {isAuthorized ? (
+          <button onClick={handleLogout} className={styles.burgerLogout}>
+            Выйти
+          </button>
         ) : (
           <>
             <Link to={'/register'} className={styles.burgerRegister} onClick={closeBurger}>

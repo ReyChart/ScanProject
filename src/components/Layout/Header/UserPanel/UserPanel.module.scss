@@ -24,8 +24,10 @@
     > .companyInfo {
       display: flex;
       flex-direction: column;
-      align-items: flex-end;
+      justify-content: center;
+      align-items: center;
       gap: 3px;
+      width: 167px;
       padding: 15px;
       background-color: rgba(217, 217, 217, 0.3);
       border-radius: 5px;
@@ -34,14 +36,16 @@
 
       @include mobileMedium {
         width: 132px;
-        align-items: flex-start;
+        height: 71px;
         padding: 5px;
       }
 
       > .text {
         color: rgba(0, 0, 0, 0.4);
+        align-self: flex-end;
 
         @include mobileMedium {
+          align-self: flex-start;
           white-space: nowrap;
         }
 

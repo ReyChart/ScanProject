@@ -2,7 +2,12 @@ export interface BurgerInterface {
   isOpen: boolean;
 }
 
-interface ErrorMessage {
+export interface LoginFormData {
+  login: string;
+  password: string;
+}
+
+export interface ErrorMessage {
   error: boolean;
   message: string;
 }

@@ -178,7 +178,7 @@
 }
 
 @mixin errorMsg {
-  height: 17px;
+  min-height: 17px;
   font-size: 14px;
   line-height: 17px;
   color: $red;
