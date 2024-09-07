@@ -1,45 +1,67 @@
 import { FunctionComponent } from 'react';
 import { Link } from 'react-router-dom';
+import DOMPurify from 'dompurify';
 import clsx from 'clsx';
 
-import { getRandomImage } from '@/utils/supportFunctions';
+import {
+  getRandomImage,
+  formatDate,
+  normalizeCountText,
+  parceText,
+} from '@/utils/supportFunctions';
+import { wordsArray } from '@/data/constants';
 
 import styles from './DocumentCard.module.scss';
 
-const DocumentCard: FunctionComponent = () => {
+interface IDocumentCardProps {
+  data: {
+    attributes: {
+      wordCount: number;
+      isDigest: boolean;
+      isTechNews: boolean;
+      isAnnouncement: boolean;
+    };
+    date: string;
+    source: string;
+    text: string;
+    title: string;
+    url: string;
+  };
+}
+
+const DocumentCard: FunctionComponent<IDocumentCardProps> = ({ data }) => {
   const randomImage = getRandomImage();
+
+  const { attributes, date, source, text, title, url } = data;
+  const sanitizedText = DOMPurify.sanitize(text);
+  const parsedText = parceText(sanitizedText);
 
   return (
     <article className={styles.documentCard}>
       <div className={styles.infoContainer}>
-        <p className={styles.date}>13.09.2021</p>
+        <p className={styles.date}>{formatDate(date)}</p>
         <a href="#" className={styles.link}>
-          Комсомольская правда KP.RU
+          {source}
         </a>
       </div>
-      <h3 className={styles.title}>Скиллфэктори - лучшая онлайн-школа для будущих айтишников</h3>
+      <h3 className={styles.title}>{title}</h3>
       <div className={styles.typesContainer}>
-        <p className={clsx(styles.type, styles.turquoise)}>Дайджест</p>
-        <p className={clsx(styles.type, styles.green)}>Анонс</p>
-        <p className={clsx(styles.type, styles.yellow)}>Технические новости</p>
+        {attributes.isDigest && <p className={clsx(styles.type, styles.turquoise)}>Дайджест</p>}
+        {attributes.isAnnouncement && <p className={clsx(styles.type, styles.green)}>Анонс</p>}
+        {attributes.isTechNews && (
+          <p className={clsx(styles.type, styles.yellow)}>Технические новости</p>
+        )}
       </div>
       <img src={randomImage.src} alt={randomImage.alt} className={styles.img} />
-      <p className={styles.text}>
-        SkillFactory — школа для всех, кто хочет изменить свою карьеру и жизнь. С 2016 года обучение
-        прошли 20 000+ человек из 40 стран с 4 континентов, самому взрослому студенту сейчас 86 лет.
-        Выпускники работают в Сбере, Cisco, Bayer, Nvidia, МТС, Ростелекоме, Mail.ru, Яндексе, Ozon
-        и других топовых компаниях. <br />
-        <br />
-        Принципы SkillFactory: акцент на практике, забота о студентах и ориентир на трудоустройство.
-        80% обучения — выполнение упражнений и реальных проектов. Каждого студента поддерживают
-        менторы, 2 саппорт-линии и комьюнити курса. А карьерный центр помогает составить резюме,
-        подготовиться к собеседованиям и познакомиться с IT-рекрутерами.
-      </p>
+      <p className={styles.text} dangerouslySetInnerHTML={{ __html: parsedText }}></p>
       <div className={styles.additionalInfoContainer}>
-        <Link to={'#'} target="_blank" className={styles.sourceLink}>
+        <Link to={url} target="_blank" className={styles.sourceLink}>
           Читать в источнике
         </Link>
-        <p className={styles.wordCount}>2 543 слова</p>
+        <p className={styles.wordCount}>{`${attributes.wordCount} ${normalizeCountText(
+          attributes.wordCount,
+          wordsArray
+        )}`}</p>
       </div>
     </article>
   );

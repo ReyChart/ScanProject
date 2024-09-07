@@ -1,14 +1,17 @@
-import { FunctionComponent, useState } from 'react';
+import { FunctionComponent } from 'react';
 import { useNavigate } from 'react-router-dom';
+
 import Layout from '../Layout/Layout';
 import BenefitSlider from '../UI/BenefitSlider/BenefitSlider';
 import Tariffs from './Tariffs/Tariffs';
 
+import { useAppSelector } from '@/redux/hooks';
+
 import styles from './HomePage.module.scss';
 
 const HomePage: FunctionComponent = () => {
-  const [isAuth, setIsAuth] = useState<boolean>(true);
   const navigate = useNavigate();
+  const isAuthorized = useAppSelector((state) => state.user.isAuthorized);
 
   const handleNavigation = (path: string) => {
     navigate(path);
@@ -25,7 +28,7 @@ const HomePage: FunctionComponent = () => {
             <p className={styles.text}>
               Комплексный анализ публикаций, получение данных в формате PDF на электронную почту.
             </p>
-            {isAuth && (
+            {isAuthorized && (
               <button className={styles.searchBtn} onClick={() => handleNavigation('/search')}>
                 Запросить данные
               </button>

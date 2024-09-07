@@ -82,3 +82,6 @@ export const articlesImg = [
 ];
 
 export const baseURL = 'https://gateway.scan-interfax.ru';
+
+export const variantsArray = ['вариант', 'варианта', 'вариантов'];
+export const wordsArray = ['слово', 'слова', 'слов'];

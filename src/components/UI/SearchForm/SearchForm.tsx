@@ -1,10 +1,14 @@
 import { FunctionComponent, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { PatternFormat, NumberFormatValues } from 'react-number-format';
 import { ru } from 'date-fns/locale/ru';
 import DatePicker from 'react-datepicker';
 import clsx from 'clsx';
 
 import { validateInnNumber } from '@/utils/validateFunctions';
+import { formRequestData } from '@/utils/supportFunctions';
+import { useAppDispatch } from '@/redux/hooks';
+import { checkUserAuthorization } from '@/redux/userSlice';
 import { ErrorStates } from '@/interfaces/general.inerfaces';
 
 import 'react-datepicker/dist/react-datepicker.css';
@@ -23,6 +27,9 @@ const SearchForm: FunctionComponent = () => {
     documentsCount: { error: false, message: '' },
     dates: { error: false, message: '' },
   });
+
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   const validateInn = (value: string) => {
     const isValid = validateInnNumber(value);
@@ -91,6 +98,14 @@ const SearchForm: FunctionComponent = () => {
     }
   };
 
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    dispatch(checkUserAuthorization());
+    const formData = new FormData(e.currentTarget);
+    const data = formRequestData(formData, startDate, endDate, inn);
+    navigate('/result', { state: { data } });
+  };
+
   const handleInnChange = (values: NumberFormatValues) => {
     const { value } = values;
     setInn(value);
@@ -117,7 +132,7 @@ const SearchForm: FunctionComponent = () => {
   }, [innIsValid, documentsCountIsValid, datesAreValid]);
 
   return (
-    <form className={styles.form}>
+    <form className={styles.form} onSubmit={handleSubmit}>
       <div className={styles.inputContainer}>
         <div className={styles.inputWrapper}>
           <label htmlFor="inn" className={styles.label}>
@@ -244,19 +259,19 @@ const SearchForm: FunctionComponent = () => {
             </label>
           </li>
           <li className={styles.checkboxItem}>
-            <input className={styles.checkbox} type="checkbox" name="announces" id="announces" />
-            <label htmlFor="announces" className={styles.label}>
+            <input
+              className={styles.checkbox}
+              type="checkbox"
+              name="announcements"
+              id="announcements"
+            />
+            <label htmlFor="announcements" className={styles.label}>
               Включать анонсы и календари
             </label>
           </li>
           <li className={styles.checkboxItem}>
-            <input
-              className={styles.checkbox}
-              type="checkbox"
-              name="summaryNews"
-              id="summaryNews"
-            />
-            <label htmlFor="summaryNews" className={styles.label}>
+            <input className={styles.checkbox} type="checkbox" name="digests" id="digests" />
+            <label htmlFor="digests" className={styles.label}>
               Включать сводки новостей
             </label>
           </li>

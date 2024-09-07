@@ -2,6 +2,8 @@
 @import '@/assets/styles/mixins';
 
 .documentCard {
+  display: flex;
+  flex-direction: column;
   max-width: 641px;
   padding: 19px 30px 35px;
   border-radius: 10px;
@@ -21,6 +23,16 @@
     .link {
       @include smallText;
     }
+
+    > .link {
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 1;
+      line-clamp: 1;
+      text-overflow: ellipsis;
+      white-space: normal;
+    }
   }
 
   > .title {
@@ -28,6 +40,13 @@
     font-size: 26px;
     font-weight: 500;
     line-height: 31px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    text-overflow: ellipsis;
+    white-space: normal;
 
     @include mobile {
       font-size: 19px;
@@ -83,10 +102,17 @@
   }
 
   > .text {
+    margin-bottom: 32px;
     font-size: 16px;
     line-height: 19px;
-    color: $black;
-    opacity: 0.5;
+    color: #949494;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 11;
+    line-clamp: 11;
+    text-overflow: ellipsis;
+    white-space: normal;
 
     @include mobile {
       font-size: 12px;
@@ -98,7 +124,7 @@
     display: flex;
     align-items: flex-end;
     justify-content: space-between;
-    margin-top: 32px;
+    margin-top: auto;
 
     @include mobile {
       margin-top: 25px;

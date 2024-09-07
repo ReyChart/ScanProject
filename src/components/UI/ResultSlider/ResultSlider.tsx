@@ -1,40 +1,37 @@
-import { FunctionComponent, useState } from 'react';
+import { FunctionComponent, useState, useEffect, useMemo } from 'react';
+import { useLocation } from 'react-router-dom';
 import clsx from 'clsx';
+
+import Loader from '../Loader/Loader';
 
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Swiper as SwiperClass } from 'swiper/types';
 import { Navigation, Keyboard } from 'swiper/modules';
 
+import { OverviewData } from '@/interfaces/data.interface';
+import { useAppDispatch, useAppSelector } from '@/redux/hooks';
+import { resetData, fetchOverviewData } from '@/redux/dataSlice';
+import { variantsArray } from '@/data/constants';
+import { normalizeCountText, formatDate } from '@/utils/supportFunctions';
+
 import 'swiper/css';
 import styles from './ResultSlider.module.scss';
 
-const mockResultData = [
-  { date: '10.09.2021', documentsCount: 5, riskCount: 2 },
-  { date: '11.09.2021', documentsCount: 3, riskCount: 1 },
-  { date: '12.09.2021', documentsCount: 8, riskCount: 0 },
-  { date: '13.09.2021', documentsCount: 6, riskCount: 3 },
-  { date: '14.09.2021', documentsCount: 7, riskCount: 2 },
-  { date: '15.09.2021', documentsCount: 4, riskCount: 1 },
-  { date: '16.09.2021', documentsCount: 5, riskCount: 2 },
-  { date: '17.09.2021', documentsCount: 2, riskCount: 0 },
-  { date: '18.09.2021', documentsCount: 9, riskCount: 4 },
-  { date: '19.09.2021', documentsCount: 10, riskCount: 5 },
-  { date: '20.09.2021', documentsCount: 3, riskCount: 1 },
-  { date: '21.09.2021', documentsCount: 7, riskCount: 2 },
-  { date: '22.09.2021', documentsCount: 5, riskCount: 0 },
-  { date: '23.09.2021', documentsCount: 8, riskCount: 3 },
-  { date: '24.09.2021', documentsCount: 4, riskCount: 1 },
-  { date: '25.09.2021', documentsCount: 6, riskCount: 2 },
-  { date: '26.09.2021', documentsCount: 9, riskCount: 4 },
-  { date: '27.09.2021', documentsCount: 7, riskCount: 1 },
-  { date: '28.09.2021', documentsCount: 8, riskCount: 3 },
-  { date: '29.09.2021', documentsCount: 5, riskCount: 2 },
-];
-
 const ResultSlider: FunctionComponent = () => {
+  const dispatch = useAppDispatch();
+  const location = useLocation();
+
+  const overviewData = useAppSelector((state) => state.data.overviewData);
+  const { overviewIsLoading } = useAppSelector((state) => state.data);
+  const { data } = location.state;
+  const variantsCount = useMemo(() => {
+    return overviewData.reduce((acc: number, item: OverviewData) => acc + item.documentsCount, 0);
+  }, [overviewData]);
+
   const [swiperInstance, setSwiperInstance] = useState<SwiperClass | null>(null);
   const [isPrevDisabled, setIsPrevDisabled] = useState<boolean>(true);
-  const [isNextDisabled, setIsNextDisabled] = useState<boolean>(mockResultData.length <= 8);
+  const [isNextDisabled, setIsNextDisabled] = useState<boolean>(overviewData.length <= 8);
+  const [isBigLoader, setIsBigLoader] = useState<boolean>(true);
 
   const handleSwiperInit = (swiper: SwiperClass) => {
     setSwiperInstance(swiper);
@@ -46,59 +43,91 @@ const ResultSlider: FunctionComponent = () => {
     setIsPrevDisabled(swiperInstance.isBeginning);
     setIsNextDisabled(swiperInstance.isEnd);
   };
+
+  useEffect(() => {
+    dispatch(resetData());
+    dispatch(fetchOverviewData(data))
+      .unwrap()
+      .catch((error) => {
+        console.error('Ошибка получения данных: ', error);
+      });
+  }, [dispatch, data]);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsBigLoader(window.innerWidth > 525);
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    handleResize();
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
   return (
     <section className={styles.resultSlider}>
       <h2 className={styles.heading}>Общая сводка</h2>
-      <p className={styles.text}>Найдено 4 221 вариантов</p>
+      <p className={styles.text}>
+        Найдено {`${variantsCount} ${normalizeCountText(variantsCount, variantsArray)}`}
+      </p>
       <div className={styles.swiperWrapper}>
         <div className={styles.titleWrapper}>
           <h3 className={styles.title}>Период</h3>
           <h3 className={styles.title}>Всего</h3>
           <h3 className={styles.title}>Риски</h3>
         </div>
-        <Swiper
-          modules={[Navigation, Keyboard]}
-          slidesPerView={Math.min(mockResultData.length, 8)}
-          spaceBetween={10}
-          keyboard={{
-            enabled: true,
-          }}
-          navigation={{
-            prevEl: `.${styles.btnPrev}`,
-            nextEl: `.${styles.btnNext}`,
-            enabled: true,
-            hideOnClick: false,
-          }}
-          onInit={handleSwiperInit}
-          onSlideChange={handleSlideChange}
-          breakpoints={{
-            0: {
-              slidesPerView: 1,
-              spaceBetween: 42,
-            },
-            526: {
-              slidesPerView: 2,
-            },
-            768: {
-              slidesPerView: 4,
-            },
-            1063: {
-              slidesPerView: 6,
-            },
-            1370: {
-              slidesPerView: Math.min(mockResultData.length, 8),
-            },
-          }}
-          className={styles.swiper}
-        >
-          {mockResultData.map((item, index) => (
-            <SwiperSlide key={index} className={styles.resultCard}>
-              <p className={styles.text}>{item.date}</p>
-              <p className={styles.text}>{item.documentsCount}</p>
-              <p className={styles.text}>{item.riskCount}</p>
-            </SwiperSlide>
-          ))}
-        </Swiper>
+        {overviewIsLoading ? (
+          <Loader isBig={isBigLoader} />
+        ) : !overviewData || overviewData.length === 0 ? (
+          <p className={styles.textNoData}>Данные не найдены</p>
+        ) : (
+          <Swiper
+            modules={[Navigation, Keyboard]}
+            slidesPerView={Math.min(overviewData.length, 8)}
+            spaceBetween={10}
+            keyboard={{
+              enabled: true,
+            }}
+            navigation={{
+              prevEl: `.${styles.btnPrev}`,
+              nextEl: `.${styles.btnNext}`,
+              enabled: true,
+              hideOnClick: false,
+            }}
+            onInit={handleSwiperInit}
+            onSlideChange={handleSlideChange}
+            breakpoints={{
+              0: {
+                slidesPerView: Math.min(overviewData.length, 1),
+                spaceBetween: 42,
+              },
+              526: {
+                slidesPerView: Math.min(overviewData.length, 2),
+              },
+              768: {
+                slidesPerView: Math.min(overviewData.length, 4),
+              },
+              1063: {
+                slidesPerView: Math.min(overviewData.length, 6),
+              },
+              1370: {
+                slidesPerView: Math.min(overviewData.length, 8),
+              },
+            }}
+            className={styles.swiper}
+          >
+            {overviewData.map((item, index) => (
+              <SwiperSlide key={index} className={styles.resultCard}>
+                <p className={styles.text}>{formatDate(item.date)}</p>
+                <p className={styles.text}>{item.documentsCount}</p>
+                <p className={styles.text}>{item.riskCount}</p>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        )}
         <button className={clsx(styles.navBtn, styles.btnPrev)} disabled={isPrevDisabled}></button>
         <button className={clsx(styles.navBtn, styles.btnNext)} disabled={isNextDisabled}></button>
       </div>
