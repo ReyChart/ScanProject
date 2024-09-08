@@ -1,11 +1,11 @@
-import { FunctionComponent, useState, useEffect } from 'react';
+import { FunctionComponent, useState, useEffect, useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
 
 import Loader from '@/components/UI/Loader/Loader';
 import DocumentCard from './DocumentCard/DocumentCard';
 
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
-import { resetData, fetchDocumentsIds, fetchArticles } from '@/redux/dataSlice';
+import { fetchDocumentsIds, fetchArticles } from '@/redux/dataSlice';
 
 import styles from './ResultDocuments.module.scss';
 
@@ -18,10 +18,10 @@ const ResultDocuments: FunctionComponent = () => {
   );
   const iDsList = useAppSelector((state) => state.data.ids);
   const articles = useAppSelector((state) => state.data.articles);
-  const { data } = location.state;
+  const memoizedData = useMemo(() => location.state.data, [location.state.data]);
 
   const [currentIndex, setCurrentIndex] = useState<number>(0);
-  const [isButtonDisplayed, setIsButtonDisplayed] = useState<boolean>(true);
+  const [isButtonDisplayed, setIsButtonDisplayed] = useState<boolean>(false);
 
   const handleLoadMore = () => {
     if (articlesAreLoading) return;
@@ -41,13 +41,12 @@ const ResultDocuments: FunctionComponent = () => {
   };
 
   useEffect(() => {
-    dispatch(resetData());
-    dispatch(fetchDocumentsIds(data))
+    dispatch(fetchDocumentsIds(memoizedData))
       .unwrap()
       .catch((error) => {
         console.error('Ошибка получения данных: ', error);
       });
-  }, [dispatch, data]);
+  }, [dispatch, memoizedData]);
 
   useEffect(() => {
     if (!idsAreLoading && !overviewIsLoading && iDsList.length > 0) {
@@ -58,6 +57,7 @@ const ResultDocuments: FunctionComponent = () => {
       if (iDsList.length > 10) {
         dispatch(fetchArticles({ ids: iDsList.slice(0, 10) }));
         setCurrentIndex(10);
+        setIsButtonDisplayed(true);
       }
     }
   }, [dispatch, iDsList, idsAreLoading, overviewIsLoading]);

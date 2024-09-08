@@ -10,7 +10,7 @@ import { Navigation, Keyboard } from 'swiper/modules';
 
 import { OverviewData } from '@/interfaces/data.interface';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
-import { resetData, fetchOverviewData } from '@/redux/dataSlice';
+import { fetchOverviewData } from '@/redux/dataSlice';
 import { variantsArray } from '@/data/constants';
 import { normalizeCountText, formatDate } from '@/utils/supportFunctions';
 
@@ -23,7 +23,7 @@ const ResultSlider: FunctionComponent = () => {
 
   const overviewData = useAppSelector((state) => state.data.overviewData);
   const { overviewIsLoading } = useAppSelector((state) => state.data);
-  const { data } = location.state;
+  const memoizedData = useMemo(() => location.state.data, [location.state.data]);
   const variantsCount = useMemo(() => {
     return overviewData.reduce((acc: number, item: OverviewData) => acc + item.documentsCount, 0);
   }, [overviewData]);
@@ -45,13 +45,12 @@ const ResultSlider: FunctionComponent = () => {
   };
 
   useEffect(() => {
-    dispatch(resetData());
-    dispatch(fetchOverviewData(data))
+    dispatch(fetchOverviewData(memoizedData))
       .unwrap()
       .catch((error) => {
         console.error('Ошибка получения данных: ', error);
       });
-  }, [dispatch, data]);
+  }, [dispatch, memoizedData]);
 
   useEffect(() => {
     const handleResize = () => {

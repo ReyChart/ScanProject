@@ -16,7 +16,7 @@ export const getAccessToken = (): string | null => {
 };
 
 export const formatDate = (date: Date | string | null | undefined) =>
-  date !== null && date !== undefined ? format(new Date(date), 'yyyy.MM.dd') : '';
+  date !== null && date !== undefined ? format(new Date(date), 'dd.MM.yyyy') : '';
 
 export const formRequestData = (
   formData: FormData,

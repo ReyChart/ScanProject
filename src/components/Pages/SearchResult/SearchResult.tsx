@@ -1,11 +1,21 @@
-import { FunctionComponent } from 'react';
+import { FunctionComponent, useEffect } from 'react';
+
 import Layout from '../../Layout/Layout';
 import ResultSlider from '@/components/UI/ResultSlider/ResultSlider';
 import ResultDocuments from './ResultDocuments/ResultDocuments';
 
+import { useAppDispatch } from '@/redux/hooks';
+import { resetData } from '@/redux/dataSlice';
+
 import styles from './SearchResult.module.scss';
 
 const SearchResult: FunctionComponent = () => {
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(resetData());
+  }, [dispatch]);
+
   return (
     <Layout>
       <div className="container">
