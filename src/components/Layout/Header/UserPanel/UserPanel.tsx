@@ -26,7 +26,7 @@ const UserPanel: FunctionComponent = () => {
 
   const handleLogout = () => {
     dispatch(logout());
-    navigate('');
+    navigate('/');
   };
 
   useEffect(() => {

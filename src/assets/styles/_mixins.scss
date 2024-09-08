@@ -189,3 +189,13 @@
   border-color: $red;
   box-shadow: $error-box-shadow;
 }
+
+@mixin textClamp($lines: 1) {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: $lines;
+  line-clamp: $lines;
+  text-overflow: ellipsis;
+  white-space: normal;
+}

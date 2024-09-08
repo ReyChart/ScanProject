@@ -25,13 +25,7 @@
     }
 
     > .link {
-      overflow: hidden;
-      display: -webkit-box;
-      -webkit-box-orient: vertical;
-      -webkit-line-clamp: 1;
-      line-clamp: 1;
-      text-overflow: ellipsis;
-      white-space: normal;
+      @include textClamp;
     }
   }
 
@@ -40,13 +34,7 @@
     font-size: 26px;
     font-weight: 500;
     line-height: 31px;
-    overflow: hidden;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
-    line-clamp: 2;
-    text-overflow: ellipsis;
-    white-space: normal;
+    @include textClamp(2);
 
     @include mobile {
       font-size: 19px;
@@ -106,13 +94,7 @@
     font-size: 16px;
     line-height: 19px;
     color: #949494;
-    overflow: hidden;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 11;
-    line-clamp: 11;
-    text-overflow: ellipsis;
-    white-space: normal;
+    @include textClamp(11);
 
     @include mobile {
       font-size: 12px;
