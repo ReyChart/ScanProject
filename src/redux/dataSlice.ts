@@ -158,6 +158,10 @@ export const dataSlice = createSlice({
     resetData: (state) => {
       state.ids = [];
       state.articles = [];
+      state.overviewData = [];
+    },
+    resetArticles: (state) => {
+      state.articles = [];
     },
   },
   extraReducers: (builder) => {
@@ -195,5 +199,5 @@ export const dataSlice = createSlice({
   },
 });
 
-export const { resetData } = dataSlice.actions;
+export const { resetData, resetArticles } = dataSlice.actions;
 export default dataSlice.reducer;
