@@ -141,6 +141,7 @@ const LoginForm: FunctionComponent = () => {
               name="password"
               onChange={handleOnChange}
               className={clsx(styles.input, { [styles.errorInput]: passwordError.error === true })}
+              autoComplete="current-password"
               required
             />
             <span className={styles.errorMsg}>{passwordError.message}</span>
