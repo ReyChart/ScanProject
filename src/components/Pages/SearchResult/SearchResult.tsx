@@ -18,6 +18,7 @@ import {
   fetchOverviewData,
   fetchDocumentsIds,
   fetchArticles,
+  mergedArticles,
 } from '@/redux/dataSlice';
 import { variantsArray } from '@/data/constants';
 import { normalizeCountText, formatDate } from '@/utils/supportFunctions';
@@ -68,7 +69,10 @@ const SearchResult: FunctionComponent = () => {
       return;
     }
 
+    dispatch(mergedArticles());
+
     dispatch(fetchArticles({ ids: updatedList }));
+
     setCurrentIndex(updatedIndex);
 
     if (updatedList.length < 10) setIsButtonDisplayed(false);
@@ -96,6 +100,7 @@ const SearchResult: FunctionComponent = () => {
         } else {
           dispatch(fetchArticles({ ids: iDsList.slice(0, 10) }));
           setCurrentIndex(10);
+          setIsButtonDisplayed(true);
         }
       } else {
         dispatch(resetArticles());
@@ -210,9 +215,8 @@ const SearchResult: FunctionComponent = () => {
         <section className={styles.resultDocuments}>
           <h2 className={styles.heading}>Список документов</h2>
           <div className={styles.documentsWrapper}>
-            {articles.map((article, index) => (
-              <DocumentCard key={index} data={article} />
-            ))}
+            {isLoadingComplete &&
+              articles.map((article, index) => <DocumentCard key={index} data={article} />)}
           </div>
           {articlesAreLoading && <Loader isBig={true} />}
           {isButtonDisplayed && !articlesAreLoading && articles.length > 0 && (

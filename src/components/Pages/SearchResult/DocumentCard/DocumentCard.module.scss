@@ -9,8 +9,17 @@
   border-radius: 10px;
   box-shadow: $box-shadow;
 
+  @include mobile {
+    max-width: 480px;
+  }
+
   @include mobileMedium {
+    max-width: 380px;
     padding: 19px 14px 18px 24px;
+  }
+
+  @include mobileSmall {
+    max-width: 335px;
   }
 
   > .infoContainer {

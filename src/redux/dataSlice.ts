@@ -20,6 +20,7 @@ const initialState: DataState = {
   articlesAreLoading: false,
   ids: [],
   articles: [],
+  prevArticles: [],
 };
 
 export const fetchOverviewData = createAsyncThunk(
@@ -158,10 +159,15 @@ export const dataSlice = createSlice({
     resetData: (state) => {
       state.ids = [];
       state.articles = [];
+      state.prevArticles = [];
       state.overviewData = [];
     },
     resetArticles: (state) => {
       state.articles = [];
+      state.prevArticles = [];
+    },
+    mergedArticles: (state) => {
+      state.prevArticles = [...state.articles];
     },
   },
   extraReducers: (builder) => {
@@ -187,7 +193,7 @@ export const dataSlice = createSlice({
         state.idsAreLoading = true;
       })
       .addCase(fetchArticles.fulfilled, (state, action) => {
-        state.articles = [...state.articles, ...action.payload];
+        state.articles = [...state.prevArticles, ...action.payload];
         state.articlesAreLoading = false;
       })
       .addCase(fetchArticles.rejected, (state) => {
@@ -199,5 +205,5 @@ export const dataSlice = createSlice({
   },
 });
 
-export const { resetData, resetArticles } = dataSlice.actions;
+export const { resetData, resetArticles, mergedArticles } = dataSlice.actions;
 export default dataSlice.reducer;

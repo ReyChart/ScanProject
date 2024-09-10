@@ -1,4 +1,4 @@
-import { FunctionComponent } from 'react';
+import { FunctionComponent, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import DOMPurify from 'dompurify';
 import clsx from 'clsx';
@@ -12,6 +12,11 @@ import {
 import { wordsArray } from '@/data/constants';
 
 import styles from './DocumentCard.module.scss';
+
+interface IRandomImage {
+  src: string;
+  alt: string;
+}
 
 interface IDocumentCardProps {
   data: {
@@ -30,11 +35,15 @@ interface IDocumentCardProps {
 }
 
 const DocumentCard: FunctionComponent<IDocumentCardProps> = ({ data }) => {
-  const randomImage = getRandomImage();
+  const [randomImage, setRandomImage] = useState<IRandomImage>(() => getRandomImage());
 
   const { attributes, date, source, text, title, url } = data;
   const sanitizedText = DOMPurify.sanitize(text);
   const parsedText = parceText(sanitizedText);
+
+  useEffect(() => {
+    setRandomImage(getRandomImage());
+  }, []);
 
   return (
     <article className={styles.documentCard}>

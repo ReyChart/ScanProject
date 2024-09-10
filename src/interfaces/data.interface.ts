@@ -38,4 +38,5 @@ export interface DataState {
   articlesAreLoading: boolean;
   ids: string[];
   articles: any[];
+  prevArticles: any[];
 }

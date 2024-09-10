@@ -253,6 +253,16 @@
     gap: 38px;
     margin-bottom: 38px;
 
+    @include notebook {
+      grid-template-columns: repeat(2, 590px);
+      justify-content: center;
+    }
+
+    @include netbook {
+      grid-template-columns: repeat(2, 490px);
+      justify-content: center;
+    }
+
     @include tablet {
       grid-template-columns: 1fr;
       justify-items: center;
